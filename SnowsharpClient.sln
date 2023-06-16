@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowsharp.Client", "Snowsharp.Client\Snowsharp.Client.csproj", "{733EE663-95FD-4FBD-AB03-8960BB6E032F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowsharp.Tests", "Snowsharp.Tests\Snowsharp.Tests.csproj", "{0541F415-27AD-473C-8FDD-9EE3C1E7B893}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{733EE663-95FD-4FBD-AB03-8960BB6E032F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{733EE663-95FD-4FBD-AB03-8960BB6E032F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{733EE663-95FD-4FBD-AB03-8960BB6E032F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{733EE663-95FD-4FBD-AB03-8960BB6E032F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0541F415-27AD-473C-8FDD-9EE3C1E7B893}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0541F415-27AD-473C-8FDD-9EE3C1E7B893}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0541F415-27AD-473C-8FDD-9EE3C1E7B893}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0541F415-27AD-473C-8FDD-9EE3C1E7B893}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

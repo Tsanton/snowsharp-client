@@ -1,0 +1,49 @@
+name: package
+
+# Only trigger, when the build workflow succeeded
+on:
+  workflow_run:
+    workflows: ["release"]
+    types:
+      - completed
+env:
+  GITHUB_ORG_NAME: tsanton
+  PACKAGE_NAME: Snowflake.SnowSharp
+  
+jobs:
+
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    timeout-minutes: 15
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Get tag
+      run: |
+        git fetch --depth=1 origin 'refs/tags/*:refs/tags/*'
+        TAG=$(git tag --contains ${{ github.event.workflow_run.head_sha }})
+        if [[ -n "$TAG" ]]; then
+          echo "CREATED_GITHUB_TAG=$TAG" >> $GITHUB_ENV
+        fi
+
+    - name: Build
+      if: ${{ env.CREATED_GITHUB_TAG != '' }}
+      run: dotnet build --configuration Release /p:Version=${CREATED_GITHUB_TAG}
+
+    # - name: Test
+    #   if: ${{ env.CREATED_GITHUB_TAG != '' }}
+    #   run: dotnet test --configuration Release /p:Version=${CREATED_GITHUB_TAG} --no-build
+
+    - name: Pack
+      if: ${{ env.CREATED_GITHUB_TAG != '' }}
+      run: dotnet pack --configuration Release /p:Version=${CREATED_GITHUB_TAG} --no-build --output .
+
+    - name: Push
+      if: ${{ env.CREATED_GITHUB_TAG != '' }}
+      run: dotnet nuget push ${PACKAGE_NAME}.${CREATED_GITHUB_TAG}.nupkg --source https://nuget.pkg.github.com/${GITHUB_ORG_NAME}/index.json --api-key ${GITHUB_TOKEN}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

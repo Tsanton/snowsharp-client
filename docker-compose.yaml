@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  snowplow:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=TEST
+      - SNOWFLAKE_ACCOUNT
+      - SNOWFLAKE_REGION
+      - SNOWFLAKE_UID
+      - SNOWFLAKE_PWD
+      - SNOWFLAKE_HOST
+      - SNOWFLAKE_ROLE
+      - SNOWFLAKE_WH
+    build:
+      context: .
+      dockerfile: SnowplowTests/Dockerfile
+    command: dotnet test

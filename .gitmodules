@@ -1,0 +1,3 @@
+[submodule "azure-devops"]
+	path = azure-devops-pipelines
+	url = https://tobianton@dev.azure.com/tobianton/snow-sharp-client/_git/snow-sharp-client
