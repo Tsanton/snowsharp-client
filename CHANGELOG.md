@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://github.com/Tsanton/snowsharp-client/compare/0.1.3...0.2.0) (2023-06-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* init package release
+
+### Features
+
+* init package release ([53d597a](https://github.com/Tsanton/snowsharp-client/commit/53d597a8552b885425a12089674e186cbc7b96b2))
+
 ## [0.1.3](https://github.com/Tsanton/snowsharp-client/compare/0.1.2...0.1.3) (2023-06-19)
 
 
