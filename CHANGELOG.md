@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/Tsanton/snowsharp-client/compare/0.1.1...0.1.2) (2023-06-19)
+
+
+### Bug Fixes
+
+* consistent naming ([b053d49](https://github.com/Tsanton/snowsharp-client/commit/b053d49a5cfad1a8f613fbcb89916e6e66d23372))
+
 ## [0.1.1](https://github.com/Tsanton/snowsharp-client/compare/v0.1.0...0.1.1) (2023-06-16)
 
 
