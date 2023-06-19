@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/Tsanton/snowsharp-client/compare/0.1.2...0.1.3) (2023-06-19)
+
+
+### Bug Fixes
+
+* .csproj file case issues ([1658f4e](https://github.com/Tsanton/snowsharp-client/commit/1658f4e840eaf7adb113541c11ec0b2b02f75f8d))
+
 ## [0.1.2](https://github.com/Tsanton/snowsharp-client/compare/0.1.1...0.1.2) (2023-06-19)
 
 
