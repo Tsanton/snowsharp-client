@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackageId>Snowflake.Snowplow</PackageId>
+      <RepositoryType>git</RepositoryType>
+      <RepositoryUrl>https://github.com/tsanton/delete-me-snowplow</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\Executables" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Snowflake.Client" Version="0.4.4" />
+    </ItemGroup>
+
+</Project>
