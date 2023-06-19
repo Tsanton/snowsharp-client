@@ -15,7 +15,7 @@ public class SchemaTests
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public SchemaTests(SnowSharpClientFixture fixture)
+    public SchemaTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -27,12 +27,12 @@ public class SchemaTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
         var schemaAsset = new Schema(dbAsset.Name, "TEST_SCHEMA")
         {
-            Comment = "Integration test schema from the SnowSharp.Client test suite",
+            Comment = "Integration test schema from the Snowsharp.Client test suite",
             Owner = new Role("SYSADMIN")
         };
         try

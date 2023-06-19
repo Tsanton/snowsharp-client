@@ -14,7 +14,7 @@ public class DatabaseRoleTests
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public DatabaseRoleTests(SnowSharpClientFixture fixture)
+    public DatabaseRoleTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -26,12 +26,12 @@ public class DatabaseRoleTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
         var roleAsset = new DatabaseRole("TEST_DATABASE_ROLE", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
         try
@@ -59,7 +59,7 @@ public class DatabaseRoleTests
         /*Arrange */
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
         try
@@ -98,17 +98,17 @@ public class DatabaseRoleTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
         var databaseRoleOwner = new DatabaseRole("TEST_OWNER_DATABASE_ROLE", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
         var databaseRoleOwned = new DatabaseRole("TEST_OWNED_DATABASE_ROLE", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = databaseRoleOwner
         };
         var rel = new RoleInheritance(childRole: databaseRoleOwner, parentPrincipal: new Role("USERADMIN"));

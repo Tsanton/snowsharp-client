@@ -16,7 +16,7 @@ public class DatabaseRoleFutureGrantTests
     private readonly Client.SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public DatabaseRoleFutureGrantTests(SnowSharpClientFixture fixture)
+    public DatabaseRoleFutureGrantTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -28,7 +28,7 @@ public class DatabaseRoleFutureGrantTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("USERADMIN")
         };
         /*Act*/
@@ -75,7 +75,7 @@ public class DatabaseRoleFutureGrantTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
         var roleAsset = new Client.Models.Assets.DatabaseRole("TEST_DATABASE_ROLE", dbAsset.Name)
@@ -115,7 +115,7 @@ public class DatabaseRoleFutureGrantTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
         var schemaAsset = new Schema(dbAsset.Name, "TEST_SCHEMA")

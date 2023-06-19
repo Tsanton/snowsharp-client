@@ -21,7 +21,7 @@ public class RoleGrantTests
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public RoleGrantTests(SnowSharpClientFixture fixture)
+    public RoleGrantTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -46,7 +46,7 @@ public class RoleGrantTests
         /*Arrange*/
         var roleAsset = new Client.Models.Assets.Role("TEST_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var grant = new GrantAction(
@@ -80,12 +80,12 @@ public class RoleGrantTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var roleAsset = new Client.Models.Assets.Role($"TEST_ROLE_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var grant = new GrantAction(
@@ -120,22 +120,22 @@ public class RoleGrantTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var schemaAsset = new Schema(dbAsset.Name, "TEST_SCHEMA")
         {
-            Comment = "Integration test schema from the SnowSharp.Client test suite",
+            Comment = "Integration test schema from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var roleAsset = new Client.Models.Assets.Role($"TEST_ROLE_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var grant = new GrantAction(
             principal: roleAsset,
-            target: new SchemaGrant(dbAsset.Name,schemaAsset.Name),
+            target: new SchemaGrant(dbAsset.Name, schemaAsset.Name),
             privileges: new List<Privilege> { Privilege.Monitor, Privilege.Usage }
         );
         try

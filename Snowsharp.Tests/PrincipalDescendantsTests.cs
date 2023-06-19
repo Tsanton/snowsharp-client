@@ -21,7 +21,7 @@ public class PrincipalDescendantsTests
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public PrincipalDescendantsTests(SnowSharpClientFixture fixture)
+    public PrincipalDescendantsTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -52,12 +52,12 @@ public class PrincipalDescendantsTests
         /*Arrange*/
         var childRole = new Client.Models.Assets.Role("TEST_CHILD_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var parentRole = new Client.Models.Assets.Role("TEST_PARENT_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var rel = new RoleInheritance(childRole: childRole, parentPrincipal: parentRole);
@@ -89,17 +89,17 @@ public class PrincipalDescendantsTests
         /*Arrange*/
         var childRole1 = new Client.Models.Assets.Role("TEST_CHILD_ROLE_1")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var childRole2 = new Client.Models.Assets.Role("TEST_CHILD_ROLE_2")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var parentRole = new Client.Models.Assets.Role("TEST_PARENT_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
 
@@ -137,22 +137,22 @@ public class PrincipalDescendantsTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var childRole = new Client.Models.Assets.Role("TEST_CHILD_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var childDatabaseRole = new DatabaseRole("TEST_SNOWPLOW_CHILD_DATABASE_ROLE", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var parentRole = new Client.Models.Assets.Role("TEST_PARENT_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var rel1 = new RoleInheritance(childRole: childRole, parentPrincipal: parentRole);
@@ -189,22 +189,22 @@ public class PrincipalDescendantsTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var childDatabaseRole1 = new DatabaseRole("TEST_SNOWPLOW_CHILD_DATABASE_ROLE1", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var childDatabaseRole2 = new DatabaseRole("TEST_SNOWPLOW_CHILD_DATABASE_ROLE2", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var parentDatabaseRole = new DatabaseRole("TEST_SNOWPLOW_PARENT_DATABASE_ROLE", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var rel1 = new RoleInheritance(childRole: childDatabaseRole1, parentPrincipal: parentDatabaseRole);

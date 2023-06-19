@@ -21,7 +21,7 @@ public class PrincipalAscendantsTests
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public PrincipalAscendantsTests(SnowSharpClientFixture fixture)
+    public PrincipalAscendantsTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -94,22 +94,22 @@ public class PrincipalAscendantsTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var dr1 = new DatabaseRole("TEST_SNOW_SHARP_CLIENT_DB_SYS_ADMIN", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var dr2 = new DatabaseRole("TEST_SNOW_SHARP_CLIENT_DB_SCHEMA_RWC", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var dr3 = new DatabaseRole("TEST_SNOW_SHARP_CLIENT_DB_SCHEMA_RW", dbAsset.Name)
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var rel1 = new RoleInheritance(childRole: dr1, parentPrincipal: new Client.Models.Assets.Role("SYSADMIN"));
@@ -125,7 +125,7 @@ public class PrincipalAscendantsTests
             await _cli.RegisterAsset(rel1, _stack);
             await _cli.RegisterAsset(rel2, _stack);
             await _cli.RegisterAsset(rel3, _stack);
-            
+
             var dbAscendants = await _cli.ShowOne<PrincipalAscendants>(new Client.Models.Describables.PrincipalAscendants(
                 new Client.Models.Describables.DatabaseRole(dr3.DatabaseName, dr3.Name)
             ));

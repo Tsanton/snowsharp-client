@@ -21,7 +21,7 @@ public class RoleFutureGrantTests
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public RoleFutureGrantTests(SnowSharpClientFixture fixture)
+    public RoleFutureGrantTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -46,12 +46,12 @@ public class RoleFutureGrantTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var roleAsset = new Client.Models.Assets.Role("TEST_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var grant = new GrantAction(
@@ -86,17 +86,17 @@ public class RoleFutureGrantTests
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test database from the SnowSharpClient test suite",
+            Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var schemaAsset = new Schema(dbAsset.Name, "TEST_SCHEMA")
         {
-            Comment = "Integration test schema from the SnowSharp.Client test suite",
+            Comment = "Integration test schema from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("SYSADMIN")
         };
         var roleAsset = new Client.Models.Assets.Role("TEST_ROLE")
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Client.Models.Assets.Role("USERADMIN")
         };
         var grant = new GrantAction(

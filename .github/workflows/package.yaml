@@ -8,7 +8,7 @@ on:
       - completed
 env:
   GITHUB_ORG_NAME: tsanton
-  PACKAGE_NAME: Snowflake.SnowSharp
+  PACKAGE_NAME: Snowflake.Snowsharp
   
 jobs:
 

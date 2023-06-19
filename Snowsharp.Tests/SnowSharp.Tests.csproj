@@ -32,7 +32,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SnowSharp.Client\SnowSharp.Client.csproj" />
+      <ProjectReference Include="..\Snowsharp.Client\Snowsharp.Client.csproj" />
     </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ public class RoleTests
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
 
-    public RoleTests(SnowSharpClientFixture fixture)
+    public RoleTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
@@ -25,7 +25,7 @@ public class RoleTests
         /*Arrange*/
         var roleAsset = new Role($"TEST_ROLE_{Guid.NewGuid():N}".ToUpper())
         {
-            Comment = "Integration test role from the SnowSharp.Client test suite",
+            Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
         try

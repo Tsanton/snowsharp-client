@@ -5,16 +5,16 @@ using Snowsharp.Client;
 namespace Snowsharp.Tests.Fixtures;
 
 [CollectionDefinition("SnowflakeClientSetupCollection")]
-public class DatabaseCollection : ICollectionFixture<SnowSharpClientFixture>
+public class DatabaseCollection : ICollectionFixture<SnowsharpClientFixture>
 {
     // A class with no code, only used to define the collection
 }
 
-public class SnowSharpClientFixture: IDisposable
+public class SnowsharpClientFixture : IDisposable
 {
     public readonly SnowsharpClient Plow;
 
-    public SnowSharpClientFixture()
+    public SnowsharpClientFixture()
     {
         Console.WriteLine("Setting up");
         var cli = new SnowflakeClient(
@@ -39,7 +39,7 @@ public class SnowSharpClientFixture: IDisposable
 
         Plow = new SnowsharpClient(cli);
     }
-    
+
     public void Dispose()
     {
         Console.WriteLine("Disposing");
