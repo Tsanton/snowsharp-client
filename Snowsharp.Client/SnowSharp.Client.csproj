@@ -4,9 +4,9 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <PackageId>Snowflake.Snowplow</PackageId>
+        <PackageId>Snowflake.Snowsharp</PackageId>
       <RepositoryType>git</RepositoryType>
-      <RepositoryUrl>https://github.com/tsanton/delete-me-snowplow</RepositoryUrl>
+      <RepositoryUrl>https://github.com/Tsanton/snowsharp-client</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
