@@ -21,17 +21,17 @@ public class SnowsharpClient : ISnowsharpClient
 
     public async Task CreateAsset(ISnowflakeAsset asset)
     {
-        await createAsset(asset);
+        await PrivateCreateAsset(asset);
     }
 
     public async Task DeleteAsset(ISnowflakeAsset asset)
     {
-        await deleteAsset(asset);
+        await PrivateDeleteAsset(asset);
     }
 
     public async Task RegisterAsset(ISnowflakeAsset asset, Stack<ISnowflakeAsset> queue)
     {
-        await createAsset(asset);
+        await PrivateCreateAsset(asset);
         queue.Push(asset);
     }
 
@@ -39,7 +39,7 @@ public class SnowsharpClient : ISnowsharpClient
     {
         while (queue.TryPop(out var asset))
         {
-            await deleteAsset(asset);
+            await PrivateDeleteAsset(asset);
         }
     }
 
@@ -113,7 +113,7 @@ public class SnowsharpClient : ISnowsharpClient
         throw new NotImplementedException();
     }
 
-    private async Task createAsset(ISnowflakeAsset asset)
+    private async Task PrivateCreateAsset(ISnowflakeAsset asset)
     {
         foreach (var query in asset.GetCreateStatement().Trim().Split(";"))
         {
@@ -122,7 +122,7 @@ public class SnowsharpClient : ISnowsharpClient
         }
     }
 
-    private async Task deleteAsset(ISnowflakeAsset asset)
+    private async Task PrivateDeleteAsset(ISnowflakeAsset asset)
     {
         foreach (var query in asset.GetDeleteStatement().Trim().Split(";"))
         {

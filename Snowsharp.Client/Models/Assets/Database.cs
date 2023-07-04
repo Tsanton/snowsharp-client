@@ -16,16 +16,11 @@ public class Database : ISnowflakeAsset, ISnowflakeTaggable
 
     public string GetCreateStatement()
     {
-        SnowflakePrincipal ownerType;
-        switch (Owner)
+        var ownerType = Owner switch
         {
-            case Role:
-                ownerType = SnowflakePrincipal.Role;
-                break;
-            default:
-                throw new NotImplementedException("Ownership is not implementer for this interface type");
-        }
-
+            Role => SnowflakePrincipal.Role,
+            _ => throw new NotImplementedException("Ownership is not implementer for this interface type"),
+        };
         return string.Format(@"
 CREATE OR REPLACE DATABASE {0} COMMENT = '{1}';
 GRANT OWNERSHIP ON DATABASE {0} TO {2} {3};",
