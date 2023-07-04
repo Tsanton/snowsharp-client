@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.3.0](https://github.com/Tsanton/snowsharp-client/compare/0.2.0...0.3.0) (2023-07-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* Tag constructor added
+
+### Features
+
+* added TagAssociation asset, describable and entity ([5b9dbad](https://github.com/Tsanton/snowsharp-client/commit/5b9dbadc6b8cfbd62a2a318ac2e250f3b04be223))
+* ISnowflakeTaggable added ([164b27d](https://github.com/Tsanton/snowsharp-client/commit/164b27debb86838b49fda944a9a2414f8010a169))
+* IsProcedure() added to SnowflakeDescribables and ISnowflakeTaggable added ([32f7fe8](https://github.com/Tsanton/snowsharp-client/commit/32f7fe8ac59c6c4c2ffeb7bbdd42aa03a63cee5a))
+
+
+### Performance Improvements
+
+* FutureGrant role SHOW command usage ([f250647](https://github.com/Tsanton/snowsharp-client/commit/f2506476928487794ffa03d37ee3121c031e4552))
+* switch change ([1b11b82](https://github.com/Tsanton/snowsharp-client/commit/1b11b82f045a8a3de782a1fe489f8f088744e4ed))
+
+
+### Code Refactoring
+
+* Tag constructor added ([20c8eca](https://github.com/Tsanton/snowsharp-client/commit/20c8eca72c343c4fac40e5e25325aaa1da1cb6c0))
+
 ## [0.2.0](https://github.com/Tsanton/snowsharp-client/compare/0.1.3...0.2.0) (2023-06-19)
 
 
