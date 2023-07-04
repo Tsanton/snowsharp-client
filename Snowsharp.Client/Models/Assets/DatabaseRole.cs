@@ -1,4 +1,5 @@
 using System.Text;
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
@@ -24,20 +25,25 @@ public class DatabaseRole : ISnowflakeAsset, ISnowflakePrincipal
             _ => throw new NotImplementedException("Ownership is not implementer for this interface type"),
         };
         var sb = new StringBuilder();
-        sb.Append($"CREATE OR REPLACE DATABASE ROLE {GetIdentifier()}");
+        sb.Append($"CREATE OR REPLACE DATABASE ROLE {GetObjectIdentifier()}");
         sb.Append(' ').Append("COMMENT = ").Append($"'{Comment}'").AppendLine(";");
-        sb.Append($"GRANT OWNERSHIP ON DATABASE ROLE {GetIdentifier()} TO {ownerType.GetSnowflakeType()} {Owner.GetIdentifier()}");
+        sb.Append($"GRANT OWNERSHIP ON DATABASE ROLE {GetObjectIdentifier()} TO {ownerType.GetSnowflakeType()} {Owner.GetObjectIdentifier()}");
         return sb.ToString();
     }
 
     public string GetDeleteStatement()
     {
         // ReSharper disable once UseStringInterpolation
-        return string.Format("DROP DATABASE ROLE IF EXISTS {0};", GetIdentifier());
+        return string.Format("DROP DATABASE ROLE IF EXISTS {0};", GetObjectIdentifier());
     }
 
-    public string GetIdentifier()
+    public string GetObjectIdentifier()
     {
         return $"{DatabaseName}.{Name}";
+    }
+
+    public string GetObjectType()
+    {
+        return "DATABASE_ROLE";
     }
 }

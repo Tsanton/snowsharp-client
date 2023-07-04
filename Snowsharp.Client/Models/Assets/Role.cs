@@ -1,4 +1,5 @@
 using System.Text;
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
@@ -22,13 +23,13 @@ public class Role : ISnowflakeAsset, ISnowflakePrincipal
             _ => throw new NotImplementedException("Ownership is not implementer for this interface type"),
         };
         var sb = new StringBuilder();
-        sb.Append($"CREATE OR REPLACE ROLE {GetIdentifier()}");
+        sb.Append($"CREATE OR REPLACE ROLE {GetObjectIdentifier()}");
         sb.Append(' ').Append("COMMENT = ").Append($"'{Comment}'").AppendLine(";");
-        sb.Append($"GRANT OWNERSHIP ON ROLE {GetIdentifier()} TO {ownerType.GetSnowflakeType()} {Owner.GetIdentifier()}");
+        sb.Append($"GRANT OWNERSHIP ON ROLE {GetObjectIdentifier()} TO {ownerType.GetSnowflakeType()} {Owner.GetObjectIdentifier()}");
         foreach (var tag in Tags)
         {
             var val = tag.TagValue ?? "";
-            sb.AppendLine($"ALTER ROLE {GetIdentifier()} SET TAG {tag.GetIdentifier()} = '{val}';");
+            sb.AppendLine($"ALTER ROLE {GetObjectIdentifier()} SET TAG {tag.GetIdentifier()} = '{val}';");
         }
         return sb.ToString();
     }
@@ -36,11 +37,16 @@ public class Role : ISnowflakeAsset, ISnowflakePrincipal
     public string GetDeleteStatement()
     {
         // ReSharper disable once UseStringInterpolation
-        return string.Format("DROP ROLE IF EXISTS {0};", GetIdentifier());
+        return string.Format("DROP ROLE IF EXISTS {0};", GetObjectIdentifier());
     }
 
-    public string GetIdentifier()
+    public string GetObjectIdentifier()
     {
         return Name;
+    }
+
+    public string GetObjectType()
+    {
+        return "DATABASE";
     }
 }

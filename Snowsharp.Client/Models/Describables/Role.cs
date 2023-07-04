@@ -1,8 +1,9 @@
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Describables;
 
-public class Role : ISnowflakeDescribable, ISnowflakeGrantPrincipal, ISnowflakeTaggable
+public class Role : ISnowflakeDescribable, ISnowflakePrincipal, ISnowflakeTaggable
 {
     public Role(string name)
     {

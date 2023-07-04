@@ -1,7 +1,4 @@
-
-using Snowsharp.Client.Models.Enums;
-
-namespace Snowsharp.Client.Models.Describables;
+namespace Snowsharp.Client.Models.Commons;
 
 public interface ISnowflakeTaggable
 {

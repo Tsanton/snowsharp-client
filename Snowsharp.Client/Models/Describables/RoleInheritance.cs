@@ -1,4 +1,5 @@
 using System.Data;
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Describables;
@@ -6,49 +7,49 @@ namespace Snowsharp.Client.Models.Describables;
 /// <summary>
 /// RoleInheritance is the action of granting USAGE on a (database) role to a principal (user, role or database role).
 /// </summary>
-public class RoleInheritance: ISnowflakeDescribable
+public class RoleInheritance : ISnowflakeDescribable
 {
-    public RoleInheritance(ISnowflakeGrantPrincipal inheritedRole, ISnowflakeGrantPrincipal parentPrincipal)
+    public RoleInheritance(ISnowflakePrincipal inheritedRole, ISnowflakePrincipal parentPrincipal)
     {
         InheritedRole = inheritedRole;
         ParentPrincipal = parentPrincipal;
     }
 
-    public ISnowflakeGrantPrincipal InheritedRole { get; set; }
-    public ISnowflakeGrantPrincipal ParentPrincipal { get; set; }
+    public ISnowflakePrincipal InheritedRole { get; set; }
+    public ISnowflakePrincipal ParentPrincipal { get; set; }
     public string GetDescribeStatement()
     {
-        SnowflakePrincipal inheritedRoleType;
+        string inheritedRoleType;
         string inheritedRoleIdentifier;
-        switch (InheritedRole)
+        switch (InheritedRole.GetObjectType())
         {
-            case Role role:
-                inheritedRoleType = SnowflakePrincipal.Role;
-                inheritedRoleIdentifier = role.Name;
+            case "ROLE":
+                inheritedRoleType = "ROLE";
+                inheritedRoleIdentifier = InheritedRole.GetObjectIdentifier();
                 break;
-            case DatabaseRole role:
-                inheritedRoleType = SnowflakePrincipal.DatabaseRole;
-                inheritedRoleIdentifier = $"{role.DatabaseName}.{role.Name}";
+            case "DATABASE_ROLE":
+                inheritedRoleType = "DATABASE_ROLE";
+                inheritedRoleIdentifier = InheritedRole.GetObjectIdentifier();
                 break;
             default:
                 throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
         }
-        SnowflakePrincipal parentPrincipalType;
+        string parentPrincipalType;
         string parentPrincipalIdentifier;
-        switch (ParentPrincipal)
+        switch (ParentPrincipal.GetObjectType())
         {
-            case Role principal:
-                parentPrincipalType = SnowflakePrincipal.Role;
-                parentPrincipalIdentifier = principal.Name;
+            case "ROLE":
+                parentPrincipalType = "ROLE";
+                parentPrincipalIdentifier = ParentPrincipal.GetObjectIdentifier();
                 break;
-            case DatabaseRole principal:
-                parentPrincipalType = SnowflakePrincipal.DatabaseRole;
-                parentPrincipalIdentifier = $"{principal.DatabaseName}.{principal.Name}";
+            case "DATABASE_ROLE":
+                parentPrincipalType = "DATABASE ROLE";
+                parentPrincipalIdentifier = ParentPrincipal.GetObjectIdentifier();
                 break;
             default:
                 throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
         }
-        if (parentPrincipalType == SnowflakePrincipal.DatabaseRole && inheritedRoleType == SnowflakePrincipal.Role)
+        if (parentPrincipalType == SnowflakePrincipal.DatabaseRole.GetSnowflakeType() && inheritedRoleType == SnowflakePrincipal.Role.GetSnowflakeType())
         {
             throw new ConstraintException("Account roles cannot be granted to database roles");
         }
@@ -66,7 +67,7 @@ def show_inherited_role_py(snowpark_session, parent_principal_identifier_py:str,
             return row.as_dict()
     raise ValueError('Role relationship does not exist or not authorized')
 $$
-call show_inherited_role('{parentPrincipalIdentifier}', '{parentPrincipalType.GetSnowflakeType()}', '{inheritedRoleIdentifier}', '{inheritedRoleType.GetEnumJsonAttributeValue()}');";
+call show_inherited_role('{parentPrincipalIdentifier}', '{parentPrincipalType}', '{inheritedRoleIdentifier}', '{inheritedRoleType}');";
         return query;
     }
 

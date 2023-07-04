@@ -133,10 +133,10 @@ public class PrincipalAscendantsTests
             /*Assert*/
             Assert.NotNull(dbAscendants);
             Assert.NotNull(dbAscendants!.Ascendants);
-            Assert.Contains(dbAscendants.Ascendants, x => x.GranteeIdentifier == dr2.GetIdentifier());
-            Assert.Equal(0, dbAscendants.Ascendants.Where(x => x.GranteeIdentifier == dr2.GetIdentifier()).Select(y => y.DistanceFromSource).First());
-            Assert.Contains(dbAscendants.Ascendants, x => x.GranteeIdentifier == dr1.GetIdentifier());
-            Assert.Equal(1, dbAscendants.Ascendants.Where(x => x.GranteeIdentifier == dr1.GetIdentifier()).Select(y => y.DistanceFromSource).First());
+            Assert.Contains(dbAscendants.Ascendants, x => x.GranteeIdentifier == dr2.GetObjectIdentifier());
+            Assert.Equal(0, dbAscendants.Ascendants.Where(x => x.GranteeIdentifier == dr2.GetObjectIdentifier()).Select(y => y.DistanceFromSource).First());
+            Assert.Contains(dbAscendants.Ascendants, x => x.GranteeIdentifier == dr1.GetObjectIdentifier());
+            Assert.Equal(1, dbAscendants.Ascendants.Where(x => x.GranteeIdentifier == dr1.GetObjectIdentifier()).Select(y => y.DistanceFromSource).First());
             Assert.Contains(dbAscendants.Ascendants, x => x.GranteeIdentifier == "SYSADMIN");
             Assert.Equal(2, dbAscendants.Ascendants.Where(x => x.GranteeIdentifier == "SYSADMIN").Select(y => y.DistanceFromSource).First());
             Assert.Contains(dbAscendants.Ascendants, x => x.GranteeIdentifier == "ACCOUNTADMIN");

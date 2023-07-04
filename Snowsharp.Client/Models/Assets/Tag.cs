@@ -1,4 +1,5 @@
 using System.Text;
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
@@ -30,7 +31,7 @@ public class Tag : ISnowflakeAsset
         sb.Append($"CREATE OR REPLACE TAG {DatabaseName}.{SchemaName}.{TagName}");
         if (TagValues is { Count: > 0 }) sb.Append(' ').Append("ALLOWED_VALUES").Append(' ').Append(string.Join(",", TagValues.Select(x => $"'{x}'")));
         sb.Append(' ').Append("COMMENT = ").Append($"'{Comment}'").AppendLine(";");
-        sb.Append($"GRANT OWNERSHIP ON TAG {DatabaseName}.{SchemaName}.{TagName} TO {ownerType.GetSnowflakeType()} {Owner.GetIdentifier()}");
+        sb.Append($"GRANT OWNERSHIP ON TAG {DatabaseName}.{SchemaName}.{TagName} TO {ownerType.GetSnowflakeType()} {Owner.GetObjectIdentifier()}");
         return sb.ToString();
     }
 

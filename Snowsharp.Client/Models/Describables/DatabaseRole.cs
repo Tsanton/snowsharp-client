@@ -1,8 +1,9 @@
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Describables;
 
-public class DatabaseRole : ISnowflakeDescribable, ISnowflakeGrantPrincipal, ISnowflakeTaggable
+public class DatabaseRole : ISnowflakeDescribable, ISnowflakePrincipal, ISnowflakeTaggable
 {
     public DatabaseRole(string databaseName, string name)
     {
@@ -26,7 +27,7 @@ public class DatabaseRole : ISnowflakeDescribable, ISnowflakeGrantPrincipal, ISn
 
     public string GetObjectType()
     {
-        return SnowflakeObject.DatabaseRole.ToSingularString();
+        return "DATABASE_ROLE"; //SnowflakeObject.DatabaseRole.ToSingularString();
     }
 
     public bool IsProcedure()

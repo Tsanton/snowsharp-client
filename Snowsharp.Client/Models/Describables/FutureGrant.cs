@@ -1,23 +1,25 @@
+using Snowsharp.Client.Models.Commons;
+
 namespace Snowsharp.Client.Models.Describables;
 
 public class FutureGrant : ISnowflakeDescribable
 {
-    public FutureGrant(ISnowflakeGrantPrincipal principal)
+    public FutureGrant(ISnowflakePrincipal principal)
     {
         Principal = principal;
     }
 
-    public ISnowflakeGrantPrincipal Principal { get; init; }
+    public ISnowflakePrincipal Principal { get; init; }
 
     public string GetDescribeStatement()
     {
         string query;
-        switch (Principal)
+        switch (Principal.GetObjectType())
         {
-            case Role principal:
-                query = $"SHOW FUTURE GRANTS TO ROLE {principal.Name}";
+            case "ROLE":
+                query = $"SHOW FUTURE GRANTS TO ROLE {Principal.GetObjectIdentifier()}";
                 return query;
-            case DatabaseRole principal:
+            case "DATABASE_ROLE":
                 query = $@"
 with show_grants_to_database_role as procedure(database_name varchar, database_role_name varchar)
     returns variant not null
@@ -40,7 +42,7 @@ def show_grants_to_database_role_py(snowpark_session, database_name_py:str, data
                     res.append(row.as_dict())
     return res
 $$
-call show_grants_to_database_role('{principal.DatabaseName}','{principal.Name}');";
+call show_grants_to_database_role('{((DatabaseRole)Principal).DatabaseName}','{((DatabaseRole)Principal).Name}');";
                 return query;
             default:
                 throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
@@ -49,14 +51,11 @@ call show_grants_to_database_role('{principal.DatabaseName}','{principal.Name}')
 
     public bool IsProcedure()
     {
-        switch (Principal)
+        return Principal switch
         {
-            case Role:
-                return false;
-            case DatabaseRole:
-                return true;
-            default:
-                throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
-        }
+            Role => false,
+            DatabaseRole => true,
+            _ => throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type"),
+        };
     }
 }

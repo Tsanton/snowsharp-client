@@ -35,7 +35,7 @@ public enum SnowflakeObject
 
 public static class SnowflakeObjectValidator
 {
-    public static string ToSingularString(this SnowflakeObject value) => $"{value.ToString()}".ToUpper();
+    public static string ToSingularString(this SnowflakeObject value) => $"{value}".ToUpper();
 
     public static string ToPluralString(this SnowflakeObject value)
     {
@@ -44,11 +44,11 @@ public static class SnowflakeObjectValidator
             SnowflakeObject.MaskingPolicy => "MASKING POLICIES",
             SnowflakeObject.PasswordPolicy => "PASSWORD POLICIES",
             SnowflakeObject.RowAccessPolicy => "ROW ACCESS POLICIES",
-            _ => $"{value.ToString()}S".ToUpper()
+            _ => $"{value}S".ToUpper()
         };
     }
 
-// public static bool Validate(this GrantTarget value, List<SnowflakePrivileges> privileges)
+    // public static bool Validate(this GrantTarget value, List<SnowflakePrivileges> privileges)
     // {
     //     return value switch
     //     {
