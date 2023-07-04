@@ -4,7 +4,7 @@ using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
 
-public class Role : ISnowflakeAsset, ISnowflakePrincipal
+public class Role : ISnowflakeAsset, ISnowflakePrincipal, ISnowflakeTaggable
 {
     public Role(string name)
     {
@@ -47,6 +47,6 @@ public class Role : ISnowflakeAsset, ISnowflakePrincipal
 
     public string GetObjectType()
     {
-        return "DATABASE";
+        return "ROLE";
     }
 }

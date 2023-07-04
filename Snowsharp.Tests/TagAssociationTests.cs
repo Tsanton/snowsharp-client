@@ -5,20 +5,21 @@ using Snowsharp.Tests.Fixtures;
 namespace Snowsharp.Tests;
 
 [Collection("SnowflakeClientSetupCollection")]
-public partial class TableTests
+public partial class TagAssociationTests
 {
     private readonly SnowsharpClient _cli;
     private readonly Stack<ISnowflakeAsset> _stack;
-
     private readonly string _comment;
-    public TableTests(SnowsharpClientFixture fixture)
+
+    public TagAssociationTests(SnowsharpClientFixture fixture)
     {
         _cli = fixture.Plow;
         _stack = new Stack<ISnowflakeAsset>();
         _comment = @"{""Comment"": ""Integration table test database from the SnowsharpClient test suite""}";
     }
-
-    private async Task<(Database, Schema)> BootstrapTableAssets()
+    
+    
+    private async Task<(Database, Schema, Tag)> BootstrapTagAssociationAssets()
     {
         /*Arrange*/
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
@@ -31,10 +32,17 @@ public partial class TableTests
             Comment = _comment,
             Owner = new Role("SYSADMIN")
         };
+        var tagAsset = new Tag(dbAsset.Name, schemaAsset.Name, "TEST_TAG")
+        {
+            TagValues = new List<string> { "FOO", "BAR" },
+            Owner = new Role("SYSADMIN"),
+            Comment = _comment,
+        }; 
 
         await _cli.RegisterAsset(dbAsset, _stack);
         await _cli.RegisterAsset(schemaAsset, _stack);
+        await _cli.RegisterAsset(tagAsset, _stack);
 
-        return (dbAsset, schemaAsset);
+        return (dbAsset, schemaAsset, tagAsset);
     }
 }

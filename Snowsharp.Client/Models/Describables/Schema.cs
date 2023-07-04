@@ -11,8 +11,8 @@ public class Schema : ISnowflakeDescribable, ISnowflakeTaggable
         SchemaName = schemaName;
     }
 
-    public string DatabaseName { get; init; }
-    public string SchemaName { get; init; }
+    public string DatabaseName { get; }
+    public string SchemaName { get; }
     public string GetDescribeStatement()
     {
         // ReSharper disable once UseStringInterpolation

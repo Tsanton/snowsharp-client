@@ -37,7 +37,7 @@ public class RoleFutureGrantTests
         ));
 
         /*Assert*/
-        Assert.Null(roleGrants);
+        Assert.Empty(roleGrants);
     }
 
     [Fact]

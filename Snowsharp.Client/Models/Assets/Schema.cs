@@ -3,7 +3,7 @@ using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
 
-public class Schema : ISnowflakeAsset
+public class Schema : ISnowflakeAsset, ISnowflakeTaggable
 {
     public Schema(string databaseName, string name)
     {
@@ -35,5 +35,15 @@ GRANT OWNERSHIP ON SCHEMA {0}.{1} TO {3} {4} REVOKE CURRENT GRANTS;",
         return string.Format(@"DROP SCHEMA IF EXISTS {0}.{1} CASCADE;",
             DatabaseName, Name
         );
+    }
+
+    public string GetObjectType()
+    {
+        return "SCHEMA";
+    }
+
+    public string GetObjectIdentifier()
+    {
+        return $"{DatabaseName}.{Name}";
     }
 }

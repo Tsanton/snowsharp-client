@@ -2,35 +2,35 @@ using System.Text.Json.Serialization;
 
 namespace Snowsharp.Client.Models.Entities;
 
-public class TagAssociation: ISnowflakeEntity
+public class TagAssociation : ISnowflakeEntity
 {
-    [JsonPropertyName("TagDatabase")]
+    [JsonPropertyName("tag_database")]
     public string TagDatabase { get; set; } = null!;
 
-    [JsonPropertyName("TagSchema")]
+    [JsonPropertyName("tag_schema")]
     public string TagSchema { get; set; } = null!;
 
-    [JsonPropertyName("TagName")]
+    [JsonPropertyName("tag_name")]
     public string TagName { get; set; } = null!;
 
-    [JsonPropertyName("TagValue")]
+    [JsonPropertyName("tag_value")]
     public string? TagValue { get; set; }
 
-    [JsonPropertyName("Level")]
+    [JsonPropertyName("level")]
     public string Level { get; set; } = null!;
 
-    [JsonPropertyName("ObjectDatabase")]
+    [JsonPropertyName("object_database")]
     public string ObjectDatabase { get; set; } = null!;
 
-    [JsonPropertyName("ObjectSchema")]
+    [JsonPropertyName("object_schema")]
     public string ObjectSchema { get; set; } = null!;
 
-    [JsonPropertyName("ObjectName")]
+    [JsonPropertyName("object_name")]
     public string ObjectName { get; set; } = null!;
 
-    [JsonPropertyName("Domain")]
+    [JsonPropertyName("domain")]
     public string Domain { get; set; } = null!;
 
-    [JsonPropertyName("ColumnName")]
+    [JsonPropertyName("column_name")]
     public string? ColumnName { get; set; }
 }

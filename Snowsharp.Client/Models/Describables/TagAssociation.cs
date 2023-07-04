@@ -1,3 +1,5 @@
+using Snowsharp.Client.Models.Commons;
+
 namespace Snowsharp.Client.Models.Describables;
 
 public class TagAssociation : ISnowflakeDescribable
@@ -11,32 +13,19 @@ public class TagAssociation : ISnowflakeDescribable
 
     public string GetDescribeStatement()
     {
-        string objectType;
-        switch (Taggable.GetObjectType())
+        string objectType = Taggable.GetObjectType() switch
         {
-            case "DATABASE":
-                objectType = "DATABASE";
-                break;
-            case "SCHEMA":
-                objectType = "DATABASE";
-                break;
-            case "TABLE":
-            case "VIEW":
-            case "MATERIALIZED VIEW":
-                objectType = "TABLE";
-                break;
-            case "ROLE":
-                objectType = "ROLE";
-                break;
-            default:
-                throw new ArgumentException("Invalid object type");
-        }
-
+            "DATABASE" => "DATABASE",
+            "SCHEMA" => "SCHEMA",
+            "TABLE" or "VIEW" or "MATERIALIZED VIEW" => "TABLE",
+            "ROLE" => "ROLE",
+            _ => throw new ArgumentException("Invalid object type"),
+        };
         return $"SELECT * from table(SNOWFLAKE.INFORMATION_SCHEMA.TAG_REFERENCES('{Taggable.GetObjectIdentifier()}', '{objectType}'));";
     }
 
     public bool IsProcedure()
     {
-        return true;
+        return false;
     }
 }

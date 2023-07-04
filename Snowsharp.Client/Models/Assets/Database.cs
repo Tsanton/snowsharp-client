@@ -3,7 +3,7 @@ using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
 
-public class Database : ISnowflakeAsset
+public class Database : ISnowflakeAsset, ISnowflakeTaggable
 {
     public Database(string name)
     {
@@ -19,7 +19,7 @@ public class Database : ISnowflakeAsset
         SnowflakePrincipal ownerType;
         switch (Owner)
         {
-            case Role principal:
+            case Role:
                 ownerType = SnowflakePrincipal.Role;
                 break;
             default:
@@ -39,5 +39,15 @@ GRANT OWNERSHIP ON DATABASE {0} TO {2} {3};",
         return string.Format(@"
 DROP DATABASE IF EXISTS {0} CASCADE;
 ", Name);
+    }
+
+    public string GetObjectIdentifier()
+    {
+        return Name;
+    }
+
+    public string GetObjectType()
+    {
+        return "DATABASE";
     }
 }
