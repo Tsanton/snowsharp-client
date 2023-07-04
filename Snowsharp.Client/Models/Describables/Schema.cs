@@ -1,6 +1,8 @@
+using Snowsharp.Client.Models.Enums;
+
 namespace Snowsharp.Client.Models.Describables;
 
-public class Schema:ISnowflakeDescribable
+public class Schema : ISnowflakeDescribable, ISnowflakeTaggable
 {
     public Schema(string databaseName, string schemaName)
     {
@@ -14,5 +16,20 @@ public class Schema:ISnowflakeDescribable
     {
         // ReSharper disable once UseStringInterpolation
         return string.Format("SHOW SCHEMAS LIKE '{0}' IN DATABASE {1};", SchemaName, DatabaseName).ToUpper();
+    }
+
+    public bool IsProcedure()
+    {
+        return false;
+    }
+
+    public string GetObjectType()
+    {
+        return SnowflakeObject.Schema.ToSingularString();
+    }
+
+    public string GetObjectIdentifier()
+    {
+        return $"{DatabaseName}.{SchemaName}";
     }
 }

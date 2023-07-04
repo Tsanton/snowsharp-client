@@ -48,8 +48,7 @@ public class SnowsharpClient : ISnowsharpClient
         try
         {
             var query = describable.GetDescribeStatement();
-            //TODO: Fix this horrible hack
-            if (query.ToUpper().Contains("AS PROCEDURE"))
+            if (describable.IsProcedure())
             {
                 var res = await ((SnowflakeClient)_cli).ExecuteScalarAsync<T>(query);
                 return res != null ? res : default;
@@ -80,8 +79,16 @@ public class SnowsharpClient : ISnowsharpClient
         try
         {
             var query = describable.GetDescribeStatement();
-            var results = await ((SnowflakeClient)_cli).ExecuteScalarAsync<List<T>>(query);
-            return results.Count == 0 ? null : results;
+            if (describable.IsProcedure())
+            {
+                var res = await ((SnowflakeClient)_cli).ExecuteScalarAsync<List<T>>(query);
+                return res ?? default;
+            }
+            else
+            {
+                var res = await ((SnowflakeClient)_cli).QueryAsync<T>(query);
+                return res.ToList();
+            }
         }
         catch (Snowflake.Client.Model.SnowflakeException e)
         {

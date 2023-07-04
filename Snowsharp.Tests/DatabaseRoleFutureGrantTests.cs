@@ -42,7 +42,7 @@ public class DatabaseRoleFutureGrantTests
             );
 
             /*Assert*/
-            Assert.Null(roleGrants);
+            Assert.Empty(roleGrants);
         }
         finally
         {

@@ -55,4 +55,9 @@ $$
 call show_direct_descendants_from_principal('{principalType}', '{principalIdentifier}');";
         return query; 
     }
+
+    public bool IsProcedure()
+    {
+        return true;
+    }
 }

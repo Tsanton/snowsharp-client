@@ -69,4 +69,9 @@ $$
 call show_inherited_role('{parentPrincipalIdentifier}', '{parentPrincipalType.GetSnowflakeType()}', '{inheritedRoleIdentifier}', '{inheritedRoleType.GetEnumJsonAttributeValue()}');";
         return query;
     }
+
+    public bool IsProcedure()
+    {
+        return true;
+    }
 }

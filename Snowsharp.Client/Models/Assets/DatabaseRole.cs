@@ -1,3 +1,4 @@
+using System.Text;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
@@ -22,11 +23,11 @@ public class DatabaseRole : ISnowflakeAsset, ISnowflakePrincipal
             DatabaseRole => SnowflakePrincipal.DatabaseRole,
             _ => throw new NotImplementedException("Ownership is not implementer for this interface type"),
         };
-        return string.Format(@"
-CREATE OR REPLACE DATABASE ROLE {0} COMMENT = '{1}';
-GRANT OWNERSHIP ON DATABASE ROLE {0} TO {2} {3} REVOKE CURRENT GRANTS;",
-            GetIdentifier(), Comment, ownerType.GetSnowflakeType(), Owner.GetIdentifier()
-        );
+        var sb = new StringBuilder();
+        sb.Append($"CREATE OR REPLACE DATABASE ROLE {GetIdentifier()}");
+        sb.Append(' ').Append("COMMENT = ").Append($"'{Comment}'").AppendLine(";");
+        sb.Append($"GRANT OWNERSHIP ON DATABASE ROLE {GetIdentifier()} TO {ownerType.GetSnowflakeType()} {Owner.GetIdentifier()}");
+        return sb.ToString();
     }
 
     public string GetDeleteStatement()

@@ -79,4 +79,9 @@ call show_all_roles_that_inherit_source('{principalType}', '{principalIdentifier
 ";
         return query; 
     }
+
+    public bool IsProcedure()
+    {
+        return true;
+    }
 }

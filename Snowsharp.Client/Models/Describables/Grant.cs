@@ -46,4 +46,9 @@ $$
 call show_grants_to_principal('{principalType}', '{principalIdentifier}');";
                 return query;
     }
+    
+    public bool IsProcedure()
+    {
+        return true;
+    }
 }
