@@ -1,6 +1,8 @@
+using Snowsharp.Client.Models.Enums;
+
 namespace Snowsharp.Client.Models.Describables;
 
-public class Table: ISnowflakeDescribable
+public class Table : ISnowflakeDescribable, ISnowflakeTaggable
 {
     public Table(string databaseName, string schemaName, string tableName)
     {
@@ -47,5 +49,20 @@ def show_table_description_py(snowpark_session, db_name_py:str, schema_name_py:s
 $$
 call show_table_description('{DatabaseName}', '{SchemaName}', '{TableName}')";
         return query;
+    }
+
+    public string GetObjectType()
+    {
+        return SnowflakeObject.Schema.ToSingularString();
+    }
+
+    public string GetObjectIdentifier()
+    {
+        return $"{DatabaseName}.{SchemaName}.{TableName}";
+    }
+
+    public bool IsProcedure()
+    {
+        return true;
     }
 }
