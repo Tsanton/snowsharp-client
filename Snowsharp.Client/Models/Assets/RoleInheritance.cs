@@ -1,4 +1,5 @@
 using System.Data;
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
@@ -22,11 +23,11 @@ public class RoleInheritance : ISnowflakeAsset
         {
             case Role principal:
                 childRoleType = SnowflakePrincipal.Role;
-                grantStatement += $" ROLE {principal.GetIdentifier()} TO";
+                grantStatement += $" ROLE {principal.GetObjectIdentifier()} TO";
                 break;
             case DatabaseRole principal:
                 childRoleType = SnowflakePrincipal.DatabaseRole;
-                grantStatement += $" DATABASE ROLE {principal.GetIdentifier()} TO";
+                grantStatement += $" DATABASE ROLE {principal.GetObjectIdentifier()} TO";
                 break;
             default:
                 throw new NotImplementedException("GetIdentifier is not implemented for this interface type");
@@ -35,11 +36,11 @@ public class RoleInheritance : ISnowflakeAsset
         {
             case Role principal:
                 parentPrincipalType = SnowflakePrincipal.Role;
-                grantStatement += $" ROLE {principal.GetIdentifier()};";
+                grantStatement += $" ROLE {principal.GetObjectIdentifier()};";
                 break;
             case DatabaseRole principal:
                 parentPrincipalType = SnowflakePrincipal.DatabaseRole;
-                grantStatement += $" DATABASE ROLE {principal.GetIdentifier()};";
+                grantStatement += $" DATABASE ROLE {principal.GetObjectIdentifier()};";
                 break;
             default:
                 throw new NotImplementedException("GetIdentifier is not implemented for this interface type");
@@ -57,14 +58,14 @@ public class RoleInheritance : ISnowflakeAsset
         var revokeStatement = "REVOKE";
         revokeStatement += ChildRole switch
         {
-            Role principal => $" ROLE {principal.GetIdentifier()} FROM",
-            DatabaseRole principal => $" DATABASE ROLE {principal.GetIdentifier()} FROM",
+            Role principal => $" ROLE {principal.GetObjectIdentifier()} FROM",
+            DatabaseRole principal => $" DATABASE ROLE {principal.GetObjectIdentifier()} FROM",
             _ => throw new NotImplementedException("GetIdentifier is not implemented for this interface type"),
         };
         revokeStatement += ParentPrincipal switch
         {
-            Role principal => $" ROLE {principal.GetIdentifier()};",
-            DatabaseRole principal => $" DATABASE ROLE {principal.GetIdentifier()};",
+            Role principal => $" ROLE {principal.GetObjectIdentifier()};",
+            DatabaseRole principal => $" DATABASE ROLE {principal.GetObjectIdentifier()};",
             _ => throw new NotImplementedException("GetIdentifier is not implemented for this interface type"),
         };
         return revokeStatement;

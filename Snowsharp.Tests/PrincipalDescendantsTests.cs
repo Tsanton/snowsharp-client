@@ -175,7 +175,7 @@ public class PrincipalDescendantsTests
             Assert.NotNull(dbDescendants);
             Assert.Equal(2, dbDescendants!.Descendants.Count);
             Assert.Contains(dbDescendants.Descendants, x => x.GrantedIdentifier == childRole.Name);
-            Assert.Contains(dbDescendants.Descendants, x => x.GrantedIdentifier == childDatabaseRole.GetIdentifier());
+            Assert.Contains(dbDescendants.Descendants, x => x.GrantedIdentifier == childDatabaseRole.GetObjectIdentifier());
         }
         finally
         {
@@ -226,8 +226,8 @@ public class PrincipalDescendantsTests
             /*Assert*/
             Assert.NotNull(dbDescendants);
             Assert.Equal(2, dbDescendants!.Descendants.Count);
-            Assert.Contains(dbDescendants.Descendants, x => x.GrantedIdentifier == childDatabaseRole1.GetIdentifier());
-            Assert.Contains(dbDescendants.Descendants, x => x.GrantedIdentifier == childDatabaseRole2.GetIdentifier());
+            Assert.Contains(dbDescendants.Descendants, x => x.GrantedIdentifier == childDatabaseRole1.GetObjectIdentifier());
+            Assert.Contains(dbDescendants.Descendants, x => x.GrantedIdentifier == childDatabaseRole2.GetObjectIdentifier());
         }
         finally
         {

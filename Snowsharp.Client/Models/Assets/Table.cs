@@ -1,8 +1,9 @@
 using System.Text;
+using Snowsharp.Client.Models.Commons;
 
 namespace Snowsharp.Client.Models.Assets;
 
-public class Table:ISnowflakeAsset
+public class Table : ISnowflakeAsset, ISnowflakeTaggable
 {
     public Table(string databaseName, string schemaName, string tableName)
     {
@@ -21,7 +22,7 @@ public class Table:ISnowflakeAsset
     // public RowAccessPolicy RowAccessPolicy { get; init; }
     public int DataRetentionTimeInDays { get; init; } = 1;
     public string Comment { get; init; } = "SNOWPLOW TEST TABLE";
-    
+
     public string GetCreateStatement()
     {
         var sb = new StringBuilder();
@@ -57,5 +58,15 @@ public class Table:ISnowflakeAsset
     public string GetDeleteStatement()
     {
         return $"DROP TABLE {DatabaseName}.{SchemaName}.{TableName}";
+    }
+
+    public string GetObjectIdentifier()
+    {
+        return $"{DatabaseName}.{SchemaName}.{TableName}";
+    }
+
+    public string GetObjectType()
+    {
+        return "TABLE";
     }
 }

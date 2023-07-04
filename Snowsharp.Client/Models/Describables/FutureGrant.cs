@@ -1,39 +1,25 @@
-using Snowsharp.Client.Models.Assets;
+using Snowsharp.Client.Models.Commons;
 
 namespace Snowsharp.Client.Models.Describables;
 
 public class FutureGrant : ISnowflakeDescribable
 {
-    public FutureGrant(ISnowflakeGrantPrincipal principal)
+    public FutureGrant(ISnowflakePrincipal principal)
     {
         Principal = principal;
     }
 
-    public ISnowflakeGrantPrincipal Principal { get; init; }
-    
+    public ISnowflakePrincipal Principal { get; init; }
+
     public string GetDescribeStatement()
     {
         string query;
-        switch (Principal)
+        switch (Principal.GetObjectType())
         {
-            case Role principal:
-                query = $@"
-with show_grants_to_role as procedure(role_name varchar)
-    returns variant not null
-    language python
-    runtime_version = '3.8'
-    packages = ('snowflake-snowpark-python')
-    handler = 'show_grants_to_role_py'
-as $$
-def show_grants_to_role_py(snowpark_session, role_name_py:str):
-    res = []
-    for row in snowpark_session.sql(f'SHOW FUTURE GRANTS TO ROLE {{role_name_py.upper()}}').to_local_iterator():
-        res.append(row.as_dict())
-    return res
-$$
-call show_grants_to_role('{principal.Name}');";
+            case "ROLE":
+                query = $"SHOW FUTURE GRANTS TO ROLE {Principal.GetObjectIdentifier()}";
                 return query;
-            case DatabaseRole principal:
+            case "DATABASE_ROLE":
                 query = $@"
 with show_grants_to_database_role as procedure(database_name varchar, database_role_name varchar)
     returns variant not null
@@ -56,10 +42,20 @@ def show_grants_to_database_role_py(snowpark_session, database_name_py:str, data
                     res.append(row.as_dict())
     return res
 $$
-call show_grants_to_database_role('{principal.DatabaseName}','{principal.Name}');";
+call show_grants_to_database_role('{((DatabaseRole)Principal).DatabaseName}','{((DatabaseRole)Principal).Name}');";
                 return query;
             default:
                 throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
         }
+    }
+
+    public bool IsProcedure()
+    {
+        return Principal switch
+        {
+            Role => false,
+            DatabaseRole => true,
+            _ => throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type"),
+        };
     }
 }

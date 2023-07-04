@@ -1,3 +1,4 @@
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Describables;
@@ -5,31 +6,31 @@ namespace Snowsharp.Client.Models.Describables;
 
 public class Grant : ISnowflakeDescribable
 {
-    public Grant(ISnowflakeGrantPrincipal principal)
+    public Grant(ISnowflakePrincipal principal)
     {
         Principal = principal;
     }
 
-    public ISnowflakeGrantPrincipal Principal { get; init; }
-    
+    public ISnowflakePrincipal Principal { get; init; }
+
     public string GetDescribeStatement()
     {
         string principalType;
         string principalIdentifier;
-        switch (Principal)
+        switch (Principal.GetObjectType())
         {
-            case Role principal:
-                principalType = SnowflakePrincipal.Role.GetSnowflakeType();
-                principalIdentifier = principal.Name;
+            case "ROLE":
+                principalType = "ROLE";
+                principalIdentifier = Principal.GetObjectIdentifier();
                 break;
-            case DatabaseRole principal:
-                principalType = SnowflakePrincipal.DatabaseRole.GetSnowflakeType();
-                principalIdentifier = $"{principal.DatabaseName}.{principal.Name}";
+            case "DATABASE_ROLE":
+                principalType = "DATABASE ROLE";
+                principalIdentifier = Principal.GetObjectIdentifier();
                 break;
             default:
                 throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
         }
-            var query = $@"
+        var query = $@"
 with show_grants_to_principal as procedure(principal_type varchar, principal_identifier varchar)
     returns variant not null
     language python
@@ -44,6 +45,11 @@ def show_grants_to_principal_py(snowpark_session, principal_type_py:str, princip
     return res
 $$
 call show_grants_to_principal('{principalType}', '{principalIdentifier}');";
-                return query;
+        return query;
+    }
+
+    public bool IsProcedure()
+    {
+        return true;
     }
 }

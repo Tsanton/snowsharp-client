@@ -1,16 +1,24 @@
 using System.Text;
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
 
-public class Tag: ISnowflakeAsset
+public class Tag : ISnowflakeAsset
 {
-    public string? DatabaseName { get; init; }
-    public string? SchemaName { get; init; }
-    public string? TagName { get; init; }
+    public Tag(string databaseName, string schemaName, string tagName)
+    {
+        DatabaseName = databaseName;
+        SchemaName = schemaName;
+        TagName = tagName;
+    }
+
+    public string DatabaseName { get; init; }
+    public string SchemaName { get; init; }
+    public string TagName { get; init; }
     public List<string> TagValues { get; init; } = new();
     public ISnowflakePrincipal Owner { get; init; } = new Role("SYSADMIN");
-    public string Comment { get; init; } = "SNOWPLOW TEST TAG";
+    public string Comment { get; init; } = "{\"COMMENT\": \"SNOWSHARP TEST TAG\"}";
     public string GetCreateStatement()
     {
         SnowflakePrincipal ownerType = Owner switch
@@ -23,7 +31,7 @@ public class Tag: ISnowflakeAsset
         sb.Append($"CREATE OR REPLACE TAG {DatabaseName}.{SchemaName}.{TagName}");
         if (TagValues is { Count: > 0 }) sb.Append(' ').Append("ALLOWED_VALUES").Append(' ').Append(string.Join(",", TagValues.Select(x => $"'{x}'")));
         sb.Append(' ').Append("COMMENT = ").Append($"'{Comment}'").AppendLine(";");
-        sb.Append($"GRANT OWNERSHIP ON TAG {DatabaseName}.{SchemaName}.{TagName} TO {ownerType.GetSnowflakeType()} {Owner.GetIdentifier()}");
+        sb.Append($"GRANT OWNERSHIP ON TAG {DatabaseName}.{SchemaName}.{TagName} TO {ownerType.GetSnowflakeType()} {Owner.GetObjectIdentifier()}");
         return sb.ToString();
     }
 

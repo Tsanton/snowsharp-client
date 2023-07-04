@@ -1,14 +1,11 @@
 using Snowsharp.Client;
 using Snowsharp.Client.Models.Assets;
-using Snowsharp.Client.Models.Entities;
 using Snowsharp.Tests.Fixtures;
-using Assets = Snowsharp.Client.Models.Assets;
 using Database = Snowsharp.Client.Models.Assets.Database;
-using Entities = Snowsharp.Client.Models.Entities;
-using Describables = Snowsharp.Client.Models.Describables;
 using Role = Snowsharp.Client.Models.Assets.Role;
 using Schema = Snowsharp.Client.Models.Assets.Schema;
-using Tag = Snowsharp.Client.Models.Entities.Tag;
+using TagAsset = Snowsharp.Client.Models.Assets.Tag;
+using TagEntity = Snowsharp.Client.Models.Entities.Tag;
 
 namespace Snowsharp.Tests;
 
@@ -48,7 +45,7 @@ public class TagTests
     public async Task Test_describe_non_existing_tag()
     {
         /*Arrange & Act*/
-        var tag = await _cli.ShowOne<Tag>(
+        var tag = await _cli.ShowOne<TagEntity>(
     new Client.Models.Describables.Tag("SNOWFLAKE", "ACCOUNT_USAGE", "I_DONT_EXIST_TAG")
         );
 
@@ -61,11 +58,8 @@ public class TagTests
     {
         /*Arrange */
         var (dbAsset, schemaAsset) = await BootstrapTagAssets();
-        var tagAsset = new Client.Models.Assets.Tag
+        var tagAsset = new TagAsset(dbAsset.Name, schemaAsset.Name, "TEST_TAG")
         {
-            DatabaseName = dbAsset.Name,
-            SchemaName = schemaAsset.Name,
-            TagName = "TEST_TAG",
             // TagValues = null,
             Owner = new Role("SYSADMIN"),
             Comment = "SNOWPLOW TEST TAG"
@@ -77,7 +71,7 @@ public class TagTests
             /*Act*/
             await _cli.RegisterAsset(tagAsset, _stack);
 
-            var dbTag = await _cli.ShowOne<Tag>(
+            var dbTag = await _cli.ShowOne<TagEntity>(
             new Client.Models.Describables.Tag(dbAsset.Name, schemaAsset.Name, tagAsset.TagName)
             );
 
@@ -97,11 +91,8 @@ public class TagTests
     {
         /*Arrange */
         var (dbAsset, schemaAsset) = await BootstrapTagAssets();
-        var tagAsset = new Client.Models.Assets.Tag
+        var tagAsset = new TagAsset(dbAsset.Name, schemaAsset.Name, "TEST_TAG")
         {
-            DatabaseName = dbAsset.Name,
-            SchemaName = schemaAsset.Name,
-            TagName = "TEST_TAG",
             TagValues = new List<string> { "FOO", "BAR" },
             Owner = new Role("SYSADMIN"),
             Comment = "SNOWPLOW TEST TAG"
@@ -112,7 +103,7 @@ public class TagTests
         {
             /*Act*/
             await _cli.RegisterAsset(tagAsset, _stack);
-            var dbTag = await _cli.ShowOne<Tag>(
+            var dbTag = await _cli.ShowOne<TagEntity>(
                 new Client.Models.Describables.Tag(dbAsset.Name, schemaAsset.Name, tagAsset.TagName)
             );
 

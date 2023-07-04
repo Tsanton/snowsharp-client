@@ -170,7 +170,7 @@ public class RoleInheritanceTests
             Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
-        var dr1 = new Client.Models.Assets.DatabaseRole("TEST_DATABASE_ROLE", dbAsset.Name)
+        var dr1 = new Assets.DatabaseRole("TEST_DATABASE_ROLE", dbAsset.Name)
         {
             Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
@@ -180,7 +180,7 @@ public class RoleInheritanceTests
             Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
-        var rel = new Client.Models.Assets.RoleInheritance(childRole: dr1, parentPrincipal: r1);
+        var rel = new Assets.RoleInheritance(childRole: dr1, parentPrincipal: r1);
         try
         {
             /*Act*/
@@ -188,10 +188,10 @@ public class RoleInheritanceTests
             await _cli.RegisterAsset(dr1, _stack);
             await _cli.RegisterAsset(r1, _stack);
             await _cli.RegisterAsset(rel, _stack);
-            var dbInheritance = await _cli.ShowOne<RoleInheritance>(new Client.Models.Describables.RoleInheritance
+            var dbInheritance = await _cli.ShowOne<RoleInheritance>(new Describables.RoleInheritance
             (
                 inheritedRole: new DatabaseRole(dr1.DatabaseName, dr1.Name),
-                parentPrincipal: new Client.Models.Describables.Role(r1.Name)
+                parentPrincipal: new Describables.Role(r1.Name)
             ));
 
             /*Assert*/
@@ -219,17 +219,17 @@ public class RoleInheritanceTests
             Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
-        var dr1 = new Client.Models.Assets.DatabaseRole("TEST_DATABASE_ROLE1", db1.Name)
+        var dr1 = new Assets.DatabaseRole("TEST_DATABASE_ROLE1", db1.Name)
         {
             Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
-        var dr2 = new Client.Models.Assets.DatabaseRole("TEST_DATABASE_ROLE2", db2.Name)
+        var dr2 = new Assets.DatabaseRole("TEST_DATABASE_ROLE2", db2.Name)
         {
             Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
-        var rel = new Client.Models.Assets.RoleInheritance(childRole: dr1, parentPrincipal: dr2);
+        var rel = new Assets.RoleInheritance(childRole: dr1, parentPrincipal: dr2);
 
         /* Act and Assert */
         await Assert.ThrowsAsync<ConstraintException>(() => _cli.RegisterAsset(rel, _stack));
@@ -244,17 +244,17 @@ public class RoleInheritanceTests
             Comment = "Integration test database from the SnowsharpClient test suite",
             Owner = new Role("SYSADMIN")
         };
-        var dr1 = new Client.Models.Assets.DatabaseRole("TEST_DATABASE_ROLE1", dbAsset.Name)
+        var dr1 = new Assets.DatabaseRole("TEST_DATABASE_ROLE1", dbAsset.Name)
         {
             Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
-        var dr2 = new Client.Models.Assets.DatabaseRole("TEST_DATABASE_ROLE2", dbAsset.Name)
+        var dr2 = new Assets.DatabaseRole("TEST_DATABASE_ROLE2", dbAsset.Name)
         {
             Comment = "Integration test role from the Snowsharp.Client test suite",
             Owner = new Role("USERADMIN")
         };
-        var rel = new Client.Models.Assets.RoleInheritance(childRole: dr1, parentPrincipal: dr2);
+        var rel = new Assets.RoleInheritance(childRole: dr1, parentPrincipal: dr2);
         try
         {
             /*Act*/
@@ -262,7 +262,7 @@ public class RoleInheritanceTests
             await _cli.RegisterAsset(dr1, _stack);
             await _cli.RegisterAsset(dr2, _stack);
             await _cli.RegisterAsset(rel, _stack);
-            var dbInheritance = await _cli.ShowOne<RoleInheritance>(new Client.Models.Describables.RoleInheritance
+            var dbInheritance = await _cli.ShowOne<RoleInheritance>(new Describables.RoleInheritance
             (
                 inheritedRole: new DatabaseRole(dr1.DatabaseName, dr1.Name),
                 parentPrincipal: new DatabaseRole(dr2.DatabaseName, dr2.Name)

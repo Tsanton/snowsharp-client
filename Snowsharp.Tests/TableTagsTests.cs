@@ -11,11 +11,8 @@ public partial class TableTests
     {
         /*Arrange*/
         var (dbAsset, schemaAsset) = await BootstrapTableAssets();
-        var tagAsset = new Tag
+        var tagAsset = new Tag(dbAsset.Name, schemaAsset.Name, "TEST_TAG")
         {
-            DatabaseName = dbAsset.Name,
-            SchemaName = schemaAsset.Name,
-            TagName = "TEST_TAG",
             // TagValues = new List<string>{"FOO", "BAR"},
             Owner = new Role("SYSADMIN"),
             Comment = "SNOWPLOW TEST TAG"
@@ -42,7 +39,7 @@ public partial class TableTests
         };
         var tableAsset = new Table(dbAsset.Name, schemaAsset.Name, "TEST_TABLE")
         {
-            Columns = new List<SnowflakeColumn>{col1, col2},
+            Columns = new List<SnowflakeColumn> { col1, col2 },
             Tags = new List<ClassificationTag>
             {
                 new(tagAsset.DatabaseName, tagAsset.SchemaName, tagAsset.TagName)
@@ -80,11 +77,8 @@ public partial class TableTests
     {
         /*Arrange*/
         var (dbAsset, schemaAsset) = await BootstrapTableAssets();
-        var tagAsset = new Tag
+        var tagAsset = new Tag(dbAsset.Name, schemaAsset.Name, "TEST_TAG")
         {
-            DatabaseName = dbAsset.Name,
-            SchemaName = schemaAsset.Name,
-            TagName = "TEST_TAG",
             TagValues = new List<string> { "FOO", "BAR" },
             Owner = new Role("SYSADMIN"),
             Comment = "SNOWPLOW TEST TAG"
@@ -111,7 +105,7 @@ public partial class TableTests
         };
         var tableAsset = new Table(dbAsset.Name, schemaAsset.Name, "TEST_TABLE")
         {
-            Columns = new List<SnowflakeColumn>{col1, col2},
+            Columns = new List<SnowflakeColumn> { col1, col2 },
             Tags = new List<ClassificationTag>
             {
                 new(tagAsset.DatabaseName, tagAsset.SchemaName, tagAsset.TagName)
@@ -153,19 +147,13 @@ public partial class TableTests
     {
         /*Arrange*/
         var (dbAsset, schemaAsset) = await BootstrapTableAssets();
-        var tagAsset1 = new Tag
+        var tagAsset1 = new Tag(dbAsset.Name, schemaAsset.Name, "TEST_TAG_1")
         {
-            DatabaseName = dbAsset.Name,
-            SchemaName = schemaAsset.Name,
-            TagName = "TEST_TAG_1",
             Owner = new Role("SYSADMIN"),
             Comment = "SNOWPLOW TEST TAG"
         };
-        var tagAsset2 = new Tag
+        var tagAsset2 = new Tag(dbAsset.Name, schemaAsset.Name, "TEST_TAG_2")
         {
-            DatabaseName = dbAsset.Name,
-            SchemaName = schemaAsset.Name,
-            TagName = "TEST_TAG_2",
             TagValues = new List<string> { "FOO", "BAR" },
             Owner = new Role("SYSADMIN"),
             Comment = "SNOWPLOW TEST TAG"
@@ -192,7 +180,7 @@ public partial class TableTests
         };
         var tableAsset = new Table(dbAsset.Name, schemaAsset.Name, "TEST_TABLE")
         {
-            Columns = new List<SnowflakeColumn>{col1, col2},
+            Columns = new List<SnowflakeColumn> { col1, col2 },
             Tags = new List<ClassificationTag>
             {
                 new(tagAsset1.DatabaseName, tagAsset1.SchemaName, tagAsset1.TagName)

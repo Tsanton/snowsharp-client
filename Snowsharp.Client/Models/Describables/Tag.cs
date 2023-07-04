@@ -17,4 +17,9 @@ public class Tag: ISnowflakeDescribable
         // ReSharper disable once UseStringInterpolation
         return string.Format("SHOW TAGS LIKE '{0}' IN SCHEMA {1}.{2};", TagName, DatabaseName, SchemaName).ToUpper();
     }
+
+    public bool IsProcedure()
+    {
+        return false;
+    }
 }

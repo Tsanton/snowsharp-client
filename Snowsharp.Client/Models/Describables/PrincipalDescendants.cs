@@ -1,3 +1,4 @@
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Describables;
@@ -5,27 +6,27 @@ namespace Snowsharp.Client.Models.Describables;
 /// <summary>
 /// Get direct children (inherited roles and database roles) for any snowflake principal. Only one level removed
 /// </summary>
-public class PrincipalDescendants: ISnowflakeDescribable
+public class PrincipalDescendants : ISnowflakeDescribable
 {
-    public PrincipalDescendants(ISnowflakeGrantPrincipal principal)
+    public PrincipalDescendants(ISnowflakePrincipal principal)
     {
         Principal = principal;
     }
 
-    public ISnowflakeGrantPrincipal Principal { get; init; }
+    public ISnowflakePrincipal Principal { get; init; }
     public string GetDescribeStatement()
     {
         string principalType;
         string principalIdentifier;
-        switch (Principal)
+        switch (Principal.GetObjectType())
         {
-            case Role principal:
-                principalType = SnowflakePrincipal.Role.GetSnowflakeType();
-                principalIdentifier = principal.Name;
+            case "ROLE":
+                principalType = "ROLE";
+                principalIdentifier = Principal.GetObjectIdentifier();
                 break;
-            case DatabaseRole principal:
-                principalType = SnowflakePrincipal.DatabaseRole.GetSnowflakeType();
-                principalIdentifier = $"{principal.DatabaseName}.{principal.Name}";
+            case "DATABASE_ROLE":
+                principalType = "DATABASE ROLE";
+                principalIdentifier = Principal.GetObjectIdentifier();
                 break;
             default:
                 throw new NotImplementedException();
@@ -53,6 +54,11 @@ def show_direct_descendants_from_principal_py(snowpark_session, principal_type_p
     }}
 $$
 call show_direct_descendants_from_principal('{principalType}', '{principalIdentifier}');";
-        return query; 
+        return query;
+    }
+
+    public bool IsProcedure()
+    {
+        return true;
     }
 }

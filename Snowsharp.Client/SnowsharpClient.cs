@@ -21,17 +21,17 @@ public class SnowsharpClient : ISnowsharpClient
 
     public async Task CreateAsset(ISnowflakeAsset asset)
     {
-        await _CreateAsset(asset);
+        await PrivateCreateAsset(asset);
     }
 
     public async Task DeleteAsset(ISnowflakeAsset asset)
     {
-        await _DeleteAsset(asset);
+        await PrivateDeleteAsset(asset);
     }
 
     public async Task RegisterAsset(ISnowflakeAsset asset, Stack<ISnowflakeAsset> queue)
     {
-        await _CreateAsset(asset);
+        await PrivateCreateAsset(asset);
         queue.Push(asset);
     }
 
@@ -39,7 +39,7 @@ public class SnowsharpClient : ISnowsharpClient
     {
         while (queue.TryPop(out var asset))
         {
-            await _DeleteAsset(asset);
+            await PrivateDeleteAsset(asset);
         }
     }
 
@@ -48,8 +48,7 @@ public class SnowsharpClient : ISnowsharpClient
         try
         {
             var query = describable.GetDescribeStatement();
-            //TODO: Fix this horrible hack
-            if (query.ToUpper().Contains("AS PROCEDURE"))
+            if (describable.IsProcedure())
             {
                 var res = await ((SnowflakeClient)_cli).ExecuteScalarAsync<T>(query);
                 return res != null ? res : default;
@@ -75,13 +74,21 @@ public class SnowsharpClient : ISnowsharpClient
         }
     }
 
-    public async Task<List<T>?> ShowMany<T>(ISnowflakeDescribable describable) where T : ISnowflakeEntity
+    public async Task<List<T>> ShowMany<T>(ISnowflakeDescribable describable) where T : ISnowflakeEntity
     {
         try
         {
             var query = describable.GetDescribeStatement();
-            var results = await ((SnowflakeClient)_cli).ExecuteScalarAsync<List<T>>(query);
-            return results.Count == 0 ? null : results;
+            if (describable.IsProcedure())
+            {
+                var res = await ((SnowflakeClient)_cli).ExecuteScalarAsync<List<T>>(query);
+                return res ?? new();
+            }
+            else
+            {
+                var res = await ((SnowflakeClient)_cli).QueryAsync<T>(query);
+                return res.ToList();
+            }
         }
         catch (Snowflake.Client.Model.SnowflakeException e)
         {
@@ -90,7 +97,7 @@ public class SnowsharpClient : ISnowsharpClient
             //For non existing databases: Database 'XXX' does not exist or not authorized.
             if (e.Message.Contains("does not exist"))
             {
-                return null;
+                return new();
             }
             throw;
         }
@@ -106,7 +113,7 @@ public class SnowsharpClient : ISnowsharpClient
         throw new NotImplementedException();
     }
 
-    private async Task _CreateAsset(ISnowflakeAsset asset)
+    private async Task PrivateCreateAsset(ISnowflakeAsset asset)
     {
         foreach (var query in asset.GetCreateStatement().Trim().Split(";"))
         {
@@ -115,7 +122,7 @@ public class SnowsharpClient : ISnowsharpClient
         }
     }
 
-    private async Task _DeleteAsset(ISnowflakeAsset asset)
+    private async Task PrivateDeleteAsset(ISnowflakeAsset asset)
     {
         foreach (var query in asset.GetDeleteStatement().Trim().Split(";"))
         {

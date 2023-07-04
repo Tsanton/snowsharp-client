@@ -1,3 +1,4 @@
+using Snowsharp.Client.Models.Commons;
 using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Describables;
@@ -8,27 +9,28 @@ namespace Snowsharp.Client.Models.Describables;
 /// <summary>
 /// Get all parent (roles and database roles inheriting the RolePrincipal) for a given Snowflake role/database role
 /// </summary>
-public class PrincipalAscendants: ISnowflakeDescribable
+public class PrincipalAscendants : ISnowflakeDescribable
 {
-    public PrincipalAscendants(ISnowflakeGrantPrincipal principal)
+    public PrincipalAscendants(ISnowflakePrincipal principal)
     {
         Principal = principal;
     }
 
-    public ISnowflakeGrantPrincipal Principal { get; init; }
+    public ISnowflakePrincipal Principal { get; init; }
+
     public string GetDescribeStatement()
     {
         string principalType;
         string principalIdentifier;
-        switch (Principal)
+        switch (Principal.GetObjectType())
         {
-            case Role principal:
-                principalType = SnowflakePrincipal.Role.GetSnowflakeType();
-                principalIdentifier = principal.Name;
+            case "ROLE":
+                principalType = "ROLE";
+                principalIdentifier = Principal.GetObjectIdentifier();
                 break;
-            case DatabaseRole principal:
-                principalType = SnowflakePrincipal.DatabaseRole.GetSnowflakeType();
-                principalIdentifier = $"{principal.DatabaseName}.{principal.Name}";
+            case "DATABASE_ROLE":
+                principalType = "DATABASE ROLE";
+                principalIdentifier = Principal.GetObjectIdentifier();
                 break;
             default:
                 throw new NotImplementedException();
@@ -77,6 +79,11 @@ def main_py(snowpark_session, principal_type_py:str, principal_identifier_py:str
 $$
 call show_all_roles_that_inherit_source('{principalType}', '{principalIdentifier}')
 ";
-        return query; 
+        return query;
+    }
+
+    public bool IsProcedure()
+    {
+        return true;
     }
 }
