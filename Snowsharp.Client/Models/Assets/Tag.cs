@@ -3,14 +3,21 @@ using Snowsharp.Client.Models.Enums;
 
 namespace Snowsharp.Client.Models.Assets;
 
-public class Tag: ISnowflakeAsset
+public class Tag : ISnowflakeAsset
 {
-    public string? DatabaseName { get; init; }
-    public string? SchemaName { get; init; }
-    public string? TagName { get; init; }
+    public Tag(string databaseName, string schemaName, string tagName)
+    {
+        DatabaseName = databaseName;
+        SchemaName = schemaName;
+        TagName = tagName;
+    }
+
+    public string DatabaseName { get; init; }
+    public string SchemaName { get; init; }
+    public string TagName { get; init; }
     public List<string> TagValues { get; init; } = new();
     public ISnowflakePrincipal Owner { get; init; } = new Role("SYSADMIN");
-    public string Comment { get; init; } = "SNOWPLOW TEST TAG";
+    public string Comment { get; init; } = "{\"COMMENT\": \"SNOWSHARP TEST TAG\"}";
     public string GetCreateStatement()
     {
         SnowflakePrincipal ownerType = Owner switch

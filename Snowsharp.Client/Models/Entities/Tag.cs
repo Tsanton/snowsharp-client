@@ -3,7 +3,7 @@ using Snowsharp.Client.Converters;
 
 namespace Snowsharp.Client.Models.Entities;
 
-public class Tag: ISnowflakeEntity
+public class Tag : ISnowflakeEntity
 {
     [JsonPropertyName("database_name")]
     public string DatabaseName { get; set; } = default!;
