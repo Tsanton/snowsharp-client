@@ -32,7 +32,7 @@ public class RoleTests
         {
             /*Act*/
             await _cli.RegisterAsset(roleAsset, _stack);
-            var dbRole = await _cli.ShowOne<Client.Models.Entities.Role>(new Client.Models.Describables.Role(roleAsset.Name));
+            var dbRole = await _cli.ShowOne<Entities.Role>(new Describables.Role(roleAsset.Name));
 
             /*Assert*/
             Assert.NotNull(dbRole);
@@ -48,7 +48,7 @@ public class RoleTests
     public async Task Test_describe_non_exising_role()
     {
         /*Arrange & Act*/
-        var dbRole = await _cli.ShowOne<Client.Models.Entities.Role>(new Client.Models.Describables.Role("I_SURELY_DO_NOT_EXIST_ROLE"));
+        var dbRole = await _cli.ShowOne<Entities.Role>(new Describables.Role("I_SURELY_DO_NOT_EXIST_ROLE"));
 
         /*Assert*/
         Assert.Null(dbRole);

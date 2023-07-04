@@ -1,5 +1,3 @@
-using Snowsharp.Client.Models.Assets;
-
 namespace Snowsharp.Client.Models.Describables;
 
 public class FutureGrant : ISnowflakeDescribable
@@ -10,28 +8,14 @@ public class FutureGrant : ISnowflakeDescribable
     }
 
     public ISnowflakeGrantPrincipal Principal { get; init; }
-    
+
     public string GetDescribeStatement()
     {
         string query;
         switch (Principal)
         {
             case Role principal:
-                query = $@"
-with show_grants_to_role as procedure(role_name varchar)
-    returns variant not null
-    language python
-    runtime_version = '3.8'
-    packages = ('snowflake-snowpark-python')
-    handler = 'show_grants_to_role_py'
-as $$
-def show_grants_to_role_py(snowpark_session, role_name_py:str):
-    res = []
-    for row in snowpark_session.sql(f'SHOW FUTURE GRANTS TO ROLE {{role_name_py.upper()}}').to_local_iterator():
-        res.append(row.as_dict())
-    return res
-$$
-call show_grants_to_role('{principal.Name}');";
+                query = $"SHOW FUTURE GRANTS TO ROLE {principal.Name}";
                 return query;
             case DatabaseRole principal:
                 query = $@"
@@ -58,6 +42,19 @@ def show_grants_to_database_role_py(snowpark_session, database_name_py:str, data
 $$
 call show_grants_to_database_role('{principal.DatabaseName}','{principal.Name}');";
                 return query;
+            default:
+                throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
+        }
+    }
+
+    public bool IsProcedure()
+    {
+        switch (Principal)
+        {
+            case Role:
+                return false;
+            case DatabaseRole:
+                return true;
             default:
                 throw new NotImplementedException("GetDescribeStatement is not implemented for this interface type");
         }

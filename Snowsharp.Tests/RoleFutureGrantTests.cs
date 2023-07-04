@@ -47,12 +47,12 @@ public class RoleFutureGrantTests
         var dbAsset = new Database($"TEST_SNOW_SHARP_CLIENT_DB_{Guid.NewGuid():N}".ToUpper())
         {
             Comment = "Integration test database from the SnowsharpClient test suite",
-            Owner = new Client.Models.Assets.Role("SYSADMIN")
+            Owner = new Assets.Role("SYSADMIN")
         };
-        var roleAsset = new Client.Models.Assets.Role("TEST_ROLE")
+        var roleAsset = new Assets.Role("TEST_ROLE")
         {
             Comment = "Integration test role from the Snowsharp.Client test suite",
-            Owner = new Client.Models.Assets.Role("USERADMIN")
+            Owner = new Assets.Role("USERADMIN")
         };
         var grant = new GrantAction(
             principal: roleAsset,
@@ -65,7 +65,7 @@ public class RoleFutureGrantTests
             await _cli.RegisterAsset(dbAsset, _stack);
             await _cli.RegisterAsset(roleAsset, _stack);
             await _cli.RegisterAsset(grant, _stack);
-            var roleGrants = await _cli.ShowMany<FutureGrant>(new Client.Models.Describables.FutureGrant
+            var roleGrants = await _cli.ShowMany<FutureGrant>(new Describables.FutureGrant
             (
                 new Role(roleAsset.Name)
             ));
