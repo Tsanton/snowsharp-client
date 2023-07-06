@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/Tsanton/snowsharp-client/compare/0.3.0...0.3.1) (2023-07-06)
+
+
+### Bug Fixes
+
+* missing semicolon for inline role tag ([c18e5d0](https://github.com/Tsanton/snowsharp-client/commit/c18e5d0d892b5c969cacc69a2e0e1778d33de2f9))
+
 ## [0.3.0](https://github.com/Tsanton/snowsharp-client/compare/0.2.0...0.3.0) (2023-07-04)
 
 
