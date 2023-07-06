@@ -25,7 +25,7 @@ public class Role : ISnowflakeAsset, ISnowflakePrincipal, ISnowflakeTaggable
         var sb = new StringBuilder();
         sb.Append($"CREATE OR REPLACE ROLE {GetObjectIdentifier()}");
         sb.Append(' ').Append("COMMENT = ").Append($"'{Comment}'").AppendLine(";");
-        sb.Append($"GRANT OWNERSHIP ON ROLE {GetObjectIdentifier()} TO {ownerType.GetSnowflakeType()} {Owner.GetObjectIdentifier()}");
+        sb.Append($"GRANT OWNERSHIP ON ROLE {GetObjectIdentifier()} TO {ownerType.GetSnowflakeType()} {Owner.GetObjectIdentifier()};");
         foreach (var tag in Tags)
         {
             var val = tag.TagValue ?? "";

@@ -1,7 +1,6 @@
 using Snowsharp.Client;
 using Snowsharp.Client.Models.Assets;
 using Snowsharp.Tests.Fixtures;
-using Assets = Snowsharp.Client.Models.Assets;
 using Entities = Snowsharp.Client.Models.Entities;
 using Describables = Snowsharp.Client.Models.Describables;
 
@@ -39,8 +38,8 @@ public class DatabaseRoleTests
             /*Act*/
             await _cli.RegisterAsset(dbAsset, _stack);
             await _cli.RegisterAsset(roleAsset, _stack);
-            var dbRole = await _cli.ShowOne<Client.Models.Entities.DatabaseRole>(
-            new Client.Models.Describables.DatabaseRole(dbAsset.Name, roleAsset.Name)
+            var dbRole = await _cli.ShowOne<Entities.DatabaseRole>(
+            new Describables.DatabaseRole(dbAsset.Name, roleAsset.Name)
             );
 
             /*Assert*/
@@ -67,8 +66,8 @@ public class DatabaseRoleTests
             /*Act*/
             await _cli.RegisterAsset(dbAsset, _stack);
 
-            var dbRole = await _cli.ShowOne<Client.Models.Entities.DatabaseRole>(
-                new Client.Models.Describables.DatabaseRole(dbAsset.Name, "I_SURELY_DO_NOT_EXIST_DATABASE_ROLE")
+            var dbRole = await _cli.ShowOne<Entities.DatabaseRole>(
+                new Describables.DatabaseRole(dbAsset.Name, "I_SURELY_DO_NOT_EXIST_DATABASE_ROLE")
             );
 
             /*Assert*/
@@ -84,8 +83,8 @@ public class DatabaseRoleTests
     public async Task Test_describe_database_role_in_non_exising_database()
     {
         /*Arrange & Act*/
-        var dbRole = await _cli.ShowOne<Client.Models.Entities.DatabaseRole>(
-    new Client.Models.Describables.DatabaseRole("I_DONT_EXIST_DATABASE", "I_SURELY_DO_NOT_EXIST_DATABASE_ROLE")
+        var dbRole = await _cli.ShowOne<Entities.DatabaseRole>(
+    new Describables.DatabaseRole("I_DONT_EXIST_DATABASE", "I_SURELY_DO_NOT_EXIST_DATABASE_ROLE")
            );
 
         /*Assert*/
@@ -119,9 +118,9 @@ public class DatabaseRoleTests
             await _cli.RegisterAsset(databaseRoleOwner, _stack);
             await _cli.RegisterAsset(rel, _stack);
             await _cli.RegisterAsset(databaseRoleOwned, _stack);
-            var dbRole = await _cli.ShowOne<Client.Models.Entities.DatabaseRole>
+            var dbRole = await _cli.ShowOne<Entities.DatabaseRole>
             (
-                new Client.Models.Describables.DatabaseRole(dbAsset.Name, databaseRoleOwned.Name)
+                new Describables.DatabaseRole(dbAsset.Name, databaseRoleOwned.Name)
             );
 
             /*Assert*/
